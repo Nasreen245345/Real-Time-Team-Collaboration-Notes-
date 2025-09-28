@@ -35,20 +35,12 @@ const io = new Server(server, {
   },
 });
 
-// read JWT secret (ensure it's set in your env)
 
 io.use(Socketmiddler)
-/**
- * Socket auth middleware
- * Expects client to connect with:
- *   const socket = io(URL, { auth: { token: "..." } });
- */
-
-// now connection handlers will only run for authenticated sockets
 io.on('connection', (socket) => {
   console.log("user connected", socket.id, "user:", socket.user);
 
-  // example: join room per user id
+  // join room per user id
   if (socket.user && socket.user.id) {
     socket.join(`user:${socket.user.id}`);
   }
