@@ -1,76 +1,119 @@
-import React, { useState } from 'react'
-import api from "../services/api"
-import { useNavigate } from 'react-router-dom'
-const Signup = () => {
-//   const navigate=useNavigate()
-  const [formData,setFormData]=useState({name:'',email:'',password:''})
-  const handleSubmit=async (e)=>{
-    e.preventDefault()
-    try{
-       
-      const res=await api.post("/auth/signup",formData,{
-        headers: { "Content-Type": "application/json" },
-      });
-      alert("Signup successfully")
-      
-    }catch(err){
-        if(err.response){
-            alert(err.response.data.message)
-        }
-        else{
-            alert("Something went wrong")
-        }
-      console.error(err)
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { UserPlus } from 'lucide-react';
+
+const Register = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { register } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+   
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      return;
     }
 
-  }
-  const handleChange=(e)=>{
-    setFormData((prev)=>({...prev,[e.target.name]:e.target.value}))
-  }
+    setLoading(true);
+
+    try {
+      await register(name, email, password);
+      navigate('/login');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to register');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className='w-full min-h-screen bg-gray-100 flex items-center justify-center'>
-      <div className='w-full bg-[#ffffff] flex flex-col gap-2 p-6 m-20 rounded-lg sm:w-3/4 md:w-1/2 lg:w-1/4'>
-      <h1 className='text-center font-bold text-2xl sm:text-3xl md:text-4xl font-inter'>Signup</h1>
-      <div className='text-center mb-3 text-ml'>Welcome backe to MiniReceipeFinder</div>
-      <form className='flex flex-col gap-3' onSubmit={handleSubmit}>
-        <label>
-            Name
-        </label>
-        <input
-        name="name" required value={formData.name} onChange={handleChange} placeholder='Enter name' 
-        className='focus:ring-2 focus:ring-blue-400 focus:outline-none rounded-md px-3 py-2 border border-gray-300'
-        />
-        <label className='font-normal '>Email</label>
-        <input
-        name="email" 
-        required
-        value={formData.email}
-        placeholder='Enter email'
-        onChange={handleChange}
-        className='rounded-md px-3 py-2 border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none'
-        />
-        <label className='font-normal '>password</label>
-        <input
-        name="password"
-        required
-        value={formData.password}
-        placeholder='Enter password'
-        onChange={handleChange}
-        className=' border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none'
-        />
-        <button className='text-white text-center bg-orange-400 rounded-md mt-2 py-2 font-semibold text-sm sm:text-xl' type="submit">
-        Submit
-      </button>
-      </form>
-      <div className='text-center mt-2'>
-        Already have an account?
-        {/* <button className='text-orange-500 font-semibold ' onClick={()=>navigate("/login")}>Login</button> */}
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+        <div className="text-center mb-8">
+         
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
+          <p className="text-gray-600">Join for Real-Time Collaborating</p>
+        </div>
 
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+            {error}
+          </div>
+        )}
 
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Full Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="John Doe"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Email Address
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+         
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold disabled:opacity-50"
+            disabled={loading}
+          >
+            {loading ? 'Creating account...' : 'Sign Up'}
+          </button>
+        </form>
+
+        <p className="text-center text-sm text-gray-600 mt-6">
+          Already have an account?{' '}
+          <Link to="/login" className="text-blue-600 hover:text-blue-800 font-semibold">
+            Sign in
+          </Link>
+        </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Signup;
+export default Register;
