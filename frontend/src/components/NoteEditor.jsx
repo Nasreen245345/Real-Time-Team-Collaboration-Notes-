@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Save } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useSocket } from '../context/SocketContext';
 import TypingIndicator from './TypingIndicator';
 
@@ -138,7 +138,6 @@ const NoteEditor = ({ note, workspaceId, onClose, onSave }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg w-full max-w-4xl h-[90vh] flex flex-col shadow-2xl">
-        {/* Header */}
         <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200 bg-white rounded-t-lg">
           <input
             type="text"
@@ -175,19 +174,18 @@ const NoteEditor = ({ note, workspaceId, onClose, onSave }) => {
             value={content}
             onChange={handleContentChange}
             className="w-full h-full text-gray-700 bg-white border-2 border-gray-300 rounded-lg p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none font-sans text-base leading-relaxed shadow-sm"
-            placeholder="Start typing your note here...&#10;&#10;You can write as much as you want. The editor will scroll automatically."
+            placeholder="Start typing your note here..."
             style={{ minHeight: '100%' }}
           />
         </div>
 
-        {/* Footer - Info bar */}
         <div className="flex-shrink-0 px-6 py-3 bg-gray-100 border-t border-gray-200 rounded-b-lg">
           <div className="flex items-center justify-between text-xs text-gray-500">
             <span>
               {content.length} characters · {content.split(/\s+/).filter(w => w.length > 0).length} words
             </span>
             <span className="text-gray-400">
-              Auto-saves after you stop typing
+              saves after you stop typing
             </span>
           </div>
         </div>
