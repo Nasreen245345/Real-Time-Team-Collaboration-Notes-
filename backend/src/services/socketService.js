@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Note = require('../models/Note');
 const Workspace = require('../models/Workspace');
-
-// Store user socketId mappings: userId -> Set of socketIds
 const userSockets = new Map();
 
 const setupSocketHandlers = (io) => {
