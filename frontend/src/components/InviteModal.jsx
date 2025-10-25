@@ -63,7 +63,7 @@ const InviteModal = ({ workspace, onClose, onMemberInvited }) => {
         <form onSubmit={handleInvite}>
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address *
+              Email Address
             </label>
             <input
               type="email"

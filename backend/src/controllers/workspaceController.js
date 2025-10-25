@@ -29,7 +29,7 @@ exports.createWorkspace = async (req, res) => {
 
     const { name, description } = req.body;
 
-    console.log(`\n📁 Creating workspace "${name}" by user ${req.user.id} (${req.user.name})`);
+   
 
     const workspace = await Workspace.create({
       name,
@@ -42,7 +42,7 @@ exports.createWorkspace = async (req, res) => {
       .populate('createdBy', 'name email')
       .populate('members', 'name email');
 
-    console.log(`✅ Workspace created successfully: ${workspace._id}`);
+  
 
     res.status(201).json(populatedWorkspace);
   } catch (error) {
@@ -56,7 +56,7 @@ exports.getWorkspace = async (req, res) => {
     const { id } = req.params;
     const userId = req.user.id.toString();
 
-    console.log(`\n📂 Getting workspace ${id} for user ${userId}`);
+    // console.log(` Getting workspace ${id} for user ${userId}`);
 
     const workspace = await Workspace.findById(id)
       .populate('createdBy', 'name email')
@@ -73,7 +73,7 @@ exports.getWorkspace = async (req, res) => {
     // Check if user is a member - convert ObjectIds to strings for comparison
     const isMember = workspace.members.some(member => {
       const memberId = member._id.toString();
-      console.log(`   Checking: ${memberId} === ${userId} ? ${memberId === userId}`);
+      // console.log(`   Checking: ${memberId} === ${userId} ? ${memberId === userId}`);
       return memberId === userId;
     });
 
@@ -82,7 +82,7 @@ exports.getWorkspace = async (req, res) => {
       return res.status(403).json({ message: 'Access denied - You are not a member of this workspace' });
     }
 
-    console.log('✅ Access granted');
+    // console.log('Access granted');
 
     const notes = await Note.find({ workspaceId: id })
       .populate('lastEditedBy', 'name email')
@@ -99,12 +99,6 @@ exports.inviteMember = async (req, res) => {
   try {
     const { id } = req.params;
     const { email } = req.body;
-
-    console.log(`\n📨 Invitation request`);
-    console.log(`   Workspace: ${id}`);
-    console.log(`   Inviting email: ${email}`);
-    console.log(`   Invited by: ${req.user.name} (${req.user.id})`);
-
     // Normalize email
     const normalizedEmail = email.toLowerCase().trim();
 
@@ -130,17 +124,16 @@ exports.inviteMember = async (req, res) => {
     const userToInvite = await User.findOne({ email: normalizedEmail });
     
     if (!userToInvite) {
-      console.log(' User not found with email:', normalizedEmail);
       return res.status(404).json({ message: 'No user found with this email address' });
     }
 
     const invitedUserId = userToInvite._id.toString();
-    console.log(`   Found user: ${userToInvite.name} (${invitedUserId})`);
+    // console.log(`   Found user: ${userToInvite.name} (${invitedUserId})`);
 
     // Check if user is already a member
     const isAlreadyMember = workspace.members.some(m => {
       const memberId = m._id.toString();
-      console.log(`   Checking member: ${memberId} === ${invitedUserId} ? ${memberId === invitedUserId}`);
+      // console.log(`   Checking member: ${memberId} === ${invitedUserId} ? ${memberId === invitedUserId}`);
       return memberId === invitedUserId;
     });
     
@@ -166,8 +159,7 @@ exports.inviteMember = async (req, res) => {
       timestamp: new Date().toISOString()
     };
 
-    console.log(` Sending notification to user ${invitedUserId}`);
-    console.log(`   Email: ${userToInvite.email}`);
+   
     
     sendToUser(invitedUserId, 'workspace.invitation', invitationData);
 
@@ -209,7 +201,7 @@ exports.acceptInvitation = async (req, res) => {
     // Check if user is already a member
     const isAlreadyMember = workspace.members.some(memberId => {
       const mId = memberId.toString();
-      console.log(`   Checking: ${mId} === ${userId} ? ${mId === userId}`);
+      // console.log(`   Checking: ${mId} === ${userId} ? ${mId === userId}`);
       return mId === userId;
     });
     
