@@ -73,10 +73,10 @@ const Home = () => {
 
             {/* Heading */}
             <h1 className="text-3xl font-bold text-gray-900 mb-3">
-              Welcome to Real-Time Collaboration
+              Welcome to Real Time Collaboration
             </h1>
             <p className="text-lg text-gray-600 mb-8">
-              You don't have any workspaces yet. Create your first workspace to start collaborating with your team in real-time.
+              You don't have any workspaces yet. Create your first workspace to start collaborating with your team in real time.
             </p>
 
             {/* CTA Button */}
@@ -111,12 +111,9 @@ const Home = () => {
       </div>
     );
   }
-
-  // Has workspaces - show normal list
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">My Workspaces</h1>
         <p className="text-gray-600">Select a workspace to start collaborating</p>
       </div>
 
