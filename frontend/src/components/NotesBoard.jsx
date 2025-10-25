@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, StickyNote, AlertCircle } from 'lucide-react';
+import { Plus, AlertCircle } from 'lucide-react';
 import { useSocket } from '../context/SocketContext';
 import NoteCard from './NoteCard';
 import NoteEditor from './NoteEditor';
@@ -91,38 +91,35 @@ const NotesBoard = ({ workspaceId, initialNotes }) => {
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
-         
+        
           <span>Notes ({notes.length})</span>
         </h2>
         <button
           onClick={handleCreateNote}
-          className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+          className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-sm"
         >
-       
           <span>New Note</span>
         </button>
       </div>
 
       {error && (
         <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2 text-red-700">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
           <span className="text-sm">{error}</span>
         </div>
       )}
 
       {notes.length === 0 ? (
-        <div className="text-center py-12">
-         
-          <p className="text-gray-500 mb-4">No notes yet. Create your first note!</p>
+        <div className="text-center py-16">
+          <p className="text-gray-400 text-sm mb-6">Create your first note to get started</p>
           <button
             onClick={handleCreateNote}
-            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition"
+            className="inline-flex items-center space-x-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition shadow-md"
           >
-            Create Note
+            <span>Create First Note</span>
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-fr">
           {notes.map(note => (
             <NoteCard
               key={note._id}

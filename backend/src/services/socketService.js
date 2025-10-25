@@ -17,7 +17,7 @@ const setupSocketHandlers = (io) => {
     try {
       const payload = jwt.verify(token, process.env.JWT_SECRET);
       socket.user = payload;
-      console.log('oken verified for user:', payload.email);
+    //   console.log('oken verified for user:', payload.email);
       return next();
     } catch (err) {
       console.log('Invalid token:', err.message);
@@ -44,13 +44,13 @@ const setupSocketHandlers = (io) => {
 
     // User online notification
     socket.on('user.online', () => {
-    //   console.log(`👤 User ${socket.user.name} marked as online`);
+    //   console.log(`User ${socket.user.name} marked as online`);
     });
 
     // Join workspace
     socket.on('workspace.join', async ({ workspaceId }) => {
       try {
-        // console.log(`\n📁 Workspace join request from ${socket.user.name}`);
+        // console.log(`\n Workspace join request from ${socket.user.name}`);
         // console.log(`   Workspace ID: ${workspaceId}`);
         // console.log(`   User ID: ${userId}`);
 
@@ -79,7 +79,7 @@ const setupSocketHandlers = (io) => {
 
         const room = `workspace:${workspaceId}`;
         socket.join(room);
-        // console.log(`✅ User joined workspace room: ${room}`);
+        // console.log(`User joined workspace room: ${room}`);
 
         // Get all users in this room
         const socketsInRoom = await io.in(room).fetchSockets();
@@ -138,7 +138,7 @@ const setupSocketHandlers = (io) => {
     // Create note
     socket.on('note.create', async ({ workspaceId, note }) => {
       try {
-        // console.log(`📝 Creating note in workspace ${workspaceId} by ${socket.user.name}`);
+        // console.log(`Creating note in workspace ${workspaceId} by ${socket.user.name}`);
         
         const workspace = await Workspace.findById(workspaceId);
         if (!workspace) {
@@ -216,7 +216,7 @@ const setupSocketHandlers = (io) => {
     // Delete note
     socket.on('note.delete', async ({ workspaceId, noteId }) => {
       try {
-        // console.log(`🗑️ Deleting note ${noteId} by ${socket.user.name}`);
+        // console.log(`Deleting note ${noteId} by ${socket.user.name}`);
         
         const workspace = await Workspace.findById(workspaceId);
         if (!workspace) {
@@ -244,7 +244,7 @@ const setupSocketHandlers = (io) => {
     // Typing indicator
     // Typing indicator
 socket.on('note.typing', ({ workspaceId, noteId, isTyping }) => {
-//   console.log(`⌨️ Typing event from ${socket.user.name}`);
+//   console.log(` Typing event from ${socket.user.name}`);
 //   console.log(`   Workspace: ${workspaceId}`);
 //   console.log(`   Note: ${noteId}`);
 //   console.log(`   Is typing: ${isTyping}`);
@@ -261,7 +261,7 @@ socket.on('note.typing', ({ workspaceId, noteId, isTyping }) => {
   // Broadcast to everyone in the workspace EXCEPT the sender
   socket.to(`workspace:${workspaceId}`).emit('note.typing', typingData);
   
-//   console.log(`   ✅ Typing event broadcasted`);
+//   console.log(` Typing event broadcasted`);
 });
 
     // Presence request

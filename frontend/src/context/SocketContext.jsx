@@ -181,10 +181,10 @@ export const SocketProvider = ({ children }) => {
 
   const sendTyping = useCallback((workspaceId, noteId, isTyping) => {
   if (socketRef.current && connected) {
-    console.log(`⌨️ Sending typing event:`);
-    console.log(`   Workspace: ${workspaceId}`);
-    console.log(`   Note: ${noteId}`);
-    console.log(`   Is typing: ${isTyping}`);
+    // console.log(`⌨️ Sending typing event:`);
+    // console.log(`   Workspace: ${workspaceId}`);
+    // console.log(`   Note: ${noteId}`);
+    // console.log(`   Is typing: ${isTyping}`);
     socketRef.current.emit('note.typing', { workspaceId, noteId, isTyping });
   } else {
     console.warn('⚠️ Cannot send typing - socket not connected');

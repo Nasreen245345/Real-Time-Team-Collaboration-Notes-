@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import {  FolderOpen  } from 'lucide-react';
 import { workspaceService } from '../services/workspace';
 
 const WorkspaceList = ({ workspaces, onWorkspaceSelect, onWorkspaceCreated }) => {
@@ -50,15 +49,7 @@ const WorkspaceList = ({ workspaces, onWorkspaceSelect, onWorkspaceCreated }) =>
             onClick={() => onWorkspaceSelect(workspace)}
             className="group p-5 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:shadow-lg cursor-pointer transition-all transform hover:-translate-y-1"
           >
-            <div className="flex items-start justify-between mb-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <FolderOpen className="w-6 h-6 text-white" />
-              </div>
-              <div className="flex items-center space-x-1 text-xs text-gray-400">
-              
-                <span>{new Date(workspace.createdAt).toLocaleDateString()}</span>
-              </div>
-            </div>
+           
 
             <h3 className="font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition">
               {workspace.name}
@@ -72,7 +63,10 @@ const WorkspaceList = ({ workspaces, onWorkspaceSelect, onWorkspaceCreated }) =>
                 <span className="text-gray-500">
                   Created by {workspace.createdBy?.name || 'Unknown'}
                 </span>
-                
+                <div className="flex items-center space-x-1 text-xs text-gray-400">
+              
+                <span>{new Date(workspace.createdAt).toLocaleDateString()}</span>
+              </div>
               </div>
             </div>
           </div>
@@ -94,7 +88,7 @@ const WorkspaceList = ({ workspaces, onWorkspaceSelect, onWorkspaceCreated }) =>
             <form onSubmit={handleCreate}>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Workspace Name *
+                  Workspace Name
                 </label>
                 <input
                   type="text"
@@ -109,13 +103,13 @@ const WorkspaceList = ({ workspaces, onWorkspaceSelect, onWorkspaceCreated }) =>
 
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Description (Optional)
+                  Description 
                 </label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="What's this workspace for?"
+                  placeholder="Purpose of workspace"
                   rows="3"
                 />
               </div>

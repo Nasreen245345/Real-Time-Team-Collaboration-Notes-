@@ -27,33 +27,21 @@ app.set('io', io);
 setupSocketHandlers(io);
 
 // Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log('✅ Connected to MongoDB');
+    console.log('Connected to MongoDB');
     
     // Start server
     server.listen(PORT, () => {
-      console.log(`\n${'='.repeat(50)}`);
-      console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📡 Socket.IO ready for connections`);
+     
+      console.log(` Server running on port ${PORT}`);
+      console.log(` Socket.IO ready for connections`);
  
-      console.log(`${'='.repeat(50)}\n`);
+     
     });
   })
   .catch((error) => {
-    console.error('❌ MongoDB connection error:', error);
+    console.error('MongoDB connection error:', error);
     process.exit(1);
   });
 
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: closing HTTP server');
-  server.close(() => {
-    console.log('HTTP server closed');
-    mongoose.connection.close(false, () => {
-      console.log('MongoDB connection closed');
-      process.exit(0);
-    });
-  });
-});

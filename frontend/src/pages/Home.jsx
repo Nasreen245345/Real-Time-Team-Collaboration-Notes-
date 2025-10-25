@@ -166,7 +166,7 @@ const CreateWorkspaceModal = ({ onClose, onWorkspaceCreated }) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Workspace Name *
+              Workspace Name
             </label>
             <input
               type="text"
@@ -181,7 +181,7 @@ const CreateWorkspaceModal = ({ onClose, onWorkspaceCreated }) => {
 
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Description (Optional)
+              Description 
             </label>
             <textarea
               value={description}
