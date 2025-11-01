@@ -14,13 +14,13 @@ const NotificationItem = ({ notification, onDismiss }) => {
     setError('');
 
     try {
-      console.log('🟢 Accepting invitation for workspace:', notification.workspaceId);
+      console.log('Accepting invitation for workspace:', notification.workspaceId);
       const response = await workspaceService.acceptInvitation(notification.workspaceId);
-      console.log('✅ Invitation accepted:', response);
+      console.log('Invitation accepted:', response);
       
       // Check if already a member
       if (response.data?.alreadyMember) {
-        console.log('ℹ️ User is already a member, dismissing notification');
+        console.log('User is already a member, dismissing notification');
         onDismiss();
         return;
       }

@@ -4,7 +4,7 @@ const User = require('../models/User');
 const Note = require('../models/Note');
 const { sendToUser } = require('../services/socketService');
 
-exports.getWorkspaces = async (req, res) => {
+exports.getWorkspaces = async (req,  res) => {
   try {
     const workspaces = await Workspace.find({
       members: req.user.id
@@ -12,7 +12,7 @@ exports.getWorkspaces = async (req, res) => {
     .populate('createdBy', 'name email')
     .select('name description createdAt createdBy')
     .sort({ createdAt: -1 });
-
+ 
     res.json(workspaces);
   } catch (error) {
     console.error('Get workspaces error:', error);
@@ -63,7 +63,6 @@ exports.getWorkspace = async (req, res) => {
       .populate('members', 'name email');
 
     if (!workspace) {
-      console.log('Workspace not found');
       return res.status(404).json({ message: 'Workspace not found' });
     }
 
@@ -110,7 +109,6 @@ exports.inviteMember = async (req, res) => {
       console.log(' Workspace not found');
       return res.status(404).json({ message: 'Workspace not found' });
     }
-
     // Check if requester is a member
     const requesterId = req.user.id.toString();
     const isMember = workspace.members.some(m => m._id.toString() === requesterId);
@@ -143,7 +141,6 @@ exports.inviteMember = async (req, res) => {
         message: `${userToInvite.name} is already a member of this workspace` 
       });
     }
-
     // Send socket notification to the specific invited user
     const invitationData = {
       workspace: {
@@ -201,7 +198,7 @@ exports.acceptInvitation = async (req, res) => {
     // Check if user is already a member
     const isAlreadyMember = workspace.members.some(memberId => {
       const mId = memberId.toString();
-      // console.log(`   Checking: ${mId} === ${userId} ? ${mId === userId}`);
+      // console.log(`Checking: ${mId} === ${userId} ? ${mId === userId}`);
       return mId === userId;
     });
     

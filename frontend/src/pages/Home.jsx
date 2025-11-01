@@ -39,7 +39,7 @@ const Home = () => {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <Loader className="w-12 h-12 text-blue-600 animate-spin mx-auto mb-4" />
+          <Loader className="w-12 h-12 text-green-600 animate-spin mx-auto mb-4" />
           <p className="text-gray-600">Loading your workspaces...</p>
         </div>
       </div>
@@ -63,15 +63,11 @@ const Home = () => {
     );
   }
 
-  // Empty state - no workspaces
   if (workspaces.length === 0) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg p-12 text-center">
+        <div className=" rounded-xl shadow-lg p-12 text-center">
           <div className="max-w-2xl mx-auto">
-            {/* Icon */}
-
-            {/* Heading */}
             <h1 className="text-3xl font-bold text-gray-900 mb-3">
               Welcome to Real Time Collaboration
             </h1>
@@ -82,7 +78,7 @@ const Home = () => {
             {/* CTA Button */}
             <button
               onClick={() => setShowCreateModal(true)}
-              className="inline-flex items-center space-x-2 px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-lg"
+              className="inline-flex items-center space-x-2 px-8 py-4 bg-[#008069] text-white rounded-lg hover:bg-green-700 transition shadow-lg hover:shadow-xl transform hover:scale-105 font-semibold text-lg"
             >
               <span>Create Your First Workspace</span>
             </button>
@@ -169,8 +165,8 @@ const CreateWorkspaceModal = ({ onClose, onWorkspaceCreated }) => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="e.g., Marketing Team, Product Development"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder=" Marketing Team, Product Development"
               required
               autoFocus
             />
@@ -183,8 +179,8 @@ const CreateWorkspaceModal = ({ onClose, onWorkspaceCreated }) => {
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="What's this workspace for?"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="What's this workspace for"
               rows="3"
             />
           </div>
@@ -200,7 +196,7 @@ const CreateWorkspaceModal = ({ onClose, onWorkspaceCreated }) => {
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50 flex items-center justify-center space-x-2"
+              className="flex-1 px-4 py-2 bg-[#008069] text-white rounded-lg hover:bg-green-700 transition disabled:opacity-50 flex items-center justify-center space-x-2"
               disabled={loading}
             >
               {loading ? (

@@ -21,7 +21,7 @@ const TypingIndicator = ({ typingUsers }) => {
     <div className="px-6 py-2 bg-gradient-to-r from-blue-50 to-indigo-50 animate-fadeIn">
       <div className="flex items-center space-x-3"> 
         {/* Typing text */}
-        <span className="text-sm text-blue-700 font-medium">
+        <span className="text-sm text-green-700 font-medium">
           {getTypingText()}
         </span>
 

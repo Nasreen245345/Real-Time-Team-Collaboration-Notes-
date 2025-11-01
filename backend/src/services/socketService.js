@@ -15,7 +15,7 @@ const setupSocketHandlers = (io) => {
     try {
       const payload = jwt.verify(token, process.env.JWT_SECRET);
       socket.user = payload;
-    //   console.log('oken verified for user:', payload.email);
+    //  console.log('oken verified for user:', payload.email);
       return next();
     } catch (err) {
       console.log('Invalid token:', err.message);
@@ -25,7 +25,7 @@ const setupSocketHandlers = (io) => {
 
   io.on('connection', (socket) => {
     const userId = socket.user.id.toString();
-    console.log(`User connected: ${socket.user.name} (${userId})`);
+    // console.log(`User connected: ${socket.user.name} (${userId})`);
    
 
  
@@ -58,7 +58,6 @@ const setupSocketHandlers = (io) => {
         //   console.log(`Workspace not found: ${workspaceId}`);
           return socket.emit('error', { message: 'Workspace not found' });
         }
-
         // console.log(`   Workspace: ${workspace.name}`);
         // console.log(`   Members in workspace: ${workspace.members.length}`);
 
@@ -66,19 +65,17 @@ const setupSocketHandlers = (io) => {
         const isMember = workspace.members.some(memberId => {
           const mId = memberId.toString();
           const uId = userId.toString();
-        //   console.log(`   Checking: ${mId} === ${uId} ? ${mId === uId}`);
+        // console.log(`   Checking: ${mId} === ${uId} ? ${mId === uId}`);
           return mId === uId;
         });
 
         if (!isMember) {
-        //   console.log(`User ${userId} is not a member of workspace ${workspaceId}`);
+        // console.log(`User ${userId} is not a member of workspace ${workspaceId}`);
           return socket.emit('error', { message: 'Access denied to workspace' });
         }
-
         const room = `workspace:${workspaceId}`;
         socket.join(room);
         // console.log(`User joined workspace room: ${room}`);
-
         // Get all users in this room
         const socketsInRoom = await io.in(room).fetchSockets();
         const users = socketsInRoom.map(s => ({
@@ -111,7 +108,6 @@ const setupSocketHandlers = (io) => {
         const room = `workspace:${workspaceId}`;
         socket.leave(room);
         // console.log(` User ${socket.user.name} left workspace: ${workspaceId}`);
-
         const socketsInRoom = await io.in(room).fetchSockets();
         const users = socketsInRoom.map(s => ({
           id: s.user.id,
@@ -137,13 +133,11 @@ const setupSocketHandlers = (io) => {
     socket.on('note.create', async ({ workspaceId, note }) => {
       try {
         // console.log(`Creating note in workspace ${workspaceId} by ${socket.user.name}`);
-        
         const workspace = await Workspace.findById(workspaceId);
         if (!workspace) {
         //   console.log(` Workspace not found`);
           return socket.emit('error', { message: 'Workspace not found' });
         }
-
         const isMember = workspace.members.some(m => m.toString() === userId);
         if (!isMember) {
         //   console.log(`Access denied for note creation`);
@@ -255,10 +249,8 @@ socket.on('note.typing', ({ workspaceId, noteId, isTyping }) => {
   };
   
 //   console.log(`   Broadcasting to workspace room except sender`);
-  
   // Broadcast to everyone in the workspace EXCEPT the sender
   socket.to(`workspace:${workspaceId}`).emit('note.typing', typingData);
-  
 //   console.log(` Typing event broadcasted`);
 });
 

@@ -32,10 +32,6 @@ export const SocketProvider = ({ children }) => {
     currentUserRef.current = currentUser;
 
     const socketUrl = 'http://localhost:3000';
-    console.log('\n🔌 Initializing socket connection...');
-    console.log('   URL:', socketUrl);
-    console.log('   User:', currentUser.name, `(${currentUser.email})`);
-    console.log('   User ID:', currentUser.id);
     
     const newSocket = io(socketUrl, {
       auth: { token },
@@ -55,7 +51,7 @@ export const SocketProvider = ({ children }) => {
       
       // Emit user online event
       newSocket.emit('user.online');
-      console.log('   Emitted user.online event');
+      console.log('Emitted user.online event');
     });
 
     newSocket.on('disconnect', (reason) => {
@@ -64,7 +60,7 @@ export const SocketProvider = ({ children }) => {
     });
 
     newSocket.on('reconnect', (attemptNumber) => {
-      console.log('🔄 Socket reconnected after', attemptNumber, 'attempts');
+      console.log('Socket reconnected after', attemptNumber, 'attempts');
       setConnected(true);
     });
 
@@ -181,13 +177,9 @@ export const SocketProvider = ({ children }) => {
 
   const sendTyping = useCallback((workspaceId, noteId, isTyping) => {
   if (socketRef.current && connected) {
-    // console.log(`⌨️ Sending typing event:`);
-    // console.log(`   Workspace: ${workspaceId}`);
-    // console.log(`   Note: ${noteId}`);
-    // console.log(`   Is typing: ${isTyping}`);
     socketRef.current.emit('note.typing', { workspaceId, noteId, isTyping });
   } else {
-    console.warn('⚠️ Cannot send typing - socket not connected');
+    console.warn('Cannot send typing - socket not connected');
   }
 }, [connected]);
 

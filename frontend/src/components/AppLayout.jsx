@@ -17,49 +17,52 @@ const AppLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
+    <div className="min-h-screen bg-[#f0f2f5]">
+      {/* WhatsApp-style Header */}
+      <header className="bg-[#008069] shadow-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+          <div className="flex justify-between items-center py-3">
             <div className="flex items-center space-x-4">
-              <h1 className="text-2xl font-bold text-gray-900">Real Time Collaboration</h1>
+              <div className="flex items-center space-x-3">
+                
+                <h1 className="text-xl font-medium text-white">Real-Time Collaboration</h1>
+              </div>
               {connected ? (
-                <span className="flex items-center text-blue-600 text-sm">
-                  Connected
+                <span className="px-2 py-1 bg-green-500 text-white text-xs rounded-full">
+                  Online
                 </span>
               ) : (
-                <span className="flex items-center text-red-600 text-sm">
-            
-                  Disconnected
+                <span className="px-2 py-1 bg-red-500 text-white text-xs rounded-full">
+                  Offline
                 </span>
               )}
             </div>
             
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
               {/* Notifications */}
               <div className="relative">
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}
-                  className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition"
+                  className="relative p-2 text-white hover:bg-white/10 rounded-full transition"
                 >
                   <Bell className="w-5 h-5" />
                   {notifications.length > 0 && (
-                    <span className="absolute top-0 right-0 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-medium">
                       {notifications.length}
                     </span>
                   )}
                 </button>
 
                 {showNotifications && (
-                  <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                    <div className="p-4 border-b border-gray-200">
+                  <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-2xl border border-gray-200 z-50">
+                    <div className="p-4 border-b border-gray-200 bg-[#f0f2f5]">
                       <h3 className="font-semibold text-gray-900">Notifications</h3>
                     </div>
                     <div className="max-h-96 overflow-y-auto">
                       {notifications.length === 0 ? (
-                        <div className="p-4 text-center text-gray-500">
-                          No notifications
+                        <div className="p-8 text-center text-gray-500">
+                          <Bell className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+                          <p>No notifications</p>
                         </div>
                       ) : (
                         notifications.map(notif => (
@@ -75,15 +78,20 @@ const AppLayout = () => {
                 )}
               </div>
 
-              {/* User menu */}
-              <div className="flex items-center space-x-3">
-                <div className="text-right">
-                  <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                  <p className="text-xs text-gray-500">{user?.email}</p>
+              {/* User Profile */}
+              <div className="flex items-center space-x-4 pl-2">
+                <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center">
+                  <span className="text-white font-semibold text-sm">
+                    {user?.name?.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <div className="text-left hidden sm:block">
+                  <p className="text-sm font-medium text-white">{user?.name}</p>
+                  <p className="text-xs text-white/70">{user?.email}</p>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition border-2 border-gray-500"
+                  className="py-2 px-3 bg-green-500 text-white hover:bg-white/10 rounded-full transition"
                   title="Logout"
                 >
                   Logout
@@ -94,8 +102,7 @@ const AppLayout = () => {
         </div>
       </header>
 
-      {/* Main content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Outlet />
       </main>
     </div>
