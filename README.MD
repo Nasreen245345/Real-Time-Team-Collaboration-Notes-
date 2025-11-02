@@ -48,7 +48,7 @@ Multiple authenticated users can join a workspace and create, edit, or delete no
 ---
 
 
-**Base URL:** `/api`
+**Base URL:** `http:localhost:5173/api`
 
 | Method | Endpoint                        | Description                      |
 | ------ | ------------------------------- | -------------------------------- |
