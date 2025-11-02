@@ -1,6 +1,3 @@
-
-import { Users } from 'lucide-react';
-
 const OnlineUsers = ({ users }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -18,7 +15,6 @@ const OnlineUsers = ({ users }) => {
       <div className="divide-y divide-gray-200 max-h-[calc(100vh-400px)] overflow-y-auto">
         {users.length === 0 ? (
           <div className="p-6 text-center text-gray-500">
-            <Users className="w-12 h-12 text-gray-300 mx-auto mb-2" />
             <p className="text-sm">No one else is online</p>
           </div>
         ) : (

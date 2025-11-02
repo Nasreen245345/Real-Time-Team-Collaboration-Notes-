@@ -17,7 +17,6 @@ const NotificationItem = ({ notification, onDismiss }) => {
       console.log('Accepting invitation for workspace:', notification.workspaceId);
       const response = await workspaceService.acceptInvitation(notification.workspaceId);
       console.log('Invitation accepted:', response);
-      
       // Check if already a member
       if (response.data?.alreadyMember) {
         console.log('User is already a member, dismissing notification');
@@ -33,10 +32,9 @@ const NotificationItem = ({ notification, onDismiss }) => {
         window.location.href = '/';
       }, 1000);
     } catch (err) {
-      console.error('❌ Failed to accept invitation:', err);
+      console.error('Failed to accept invitation:', err);
       const errorMessage = err.response?.data?.message || 'Failed to accept invitation';
       setError(errorMessage);
-      
       // If already a member, just dismiss the notification after a delay
       if (errorMessage.includes('already a member')) {
         setTimeout(() => {

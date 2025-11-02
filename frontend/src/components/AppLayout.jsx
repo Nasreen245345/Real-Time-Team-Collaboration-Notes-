@@ -39,7 +39,6 @@ const AppLayout = () => {
             </div>
             
             <div className="flex items-center space-x-2">
-              {/* Notifications */}
               <div className="relative">
                 <button
                   onClick={() => setShowNotifications(!showNotifications)}

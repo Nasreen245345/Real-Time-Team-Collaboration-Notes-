@@ -65,7 +65,7 @@ const setupSocketHandlers = (io) => {
         const isMember = workspace.members.some(memberId => {
           const mId = memberId.toString();
           const uId = userId.toString();
-        // console.log(`   Checking: ${mId} === ${uId} ? ${mId === uId}`);
+        // console.log(`Checking: ${mId} === ${uId} ? ${mId === uId}`);
           return mId === uId;
         });
 
